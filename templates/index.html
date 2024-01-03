@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}My Top 10 Movies{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1 class="heading">My Top 10 Movies</h1>
+  <p class="description">These are my all-time favourite movies.</p>
+   
+  {% for movie in movies %}
+  <div class="card" >
+    <div class="front" style="background-image: url({{movie.img_url}});">
+        <p class="large">{{movie.ranking}}</p>
+    </div>
+    <div class="back">
+      <div>
+    <div class="title">{{movie.title}} <span class="release_date">{{movie.year}}</span></div>
+        <div class="rating">
+            <label>{{movie.rating}}</label>
+          <i class="fas fa-star star"></i>
+        </div>
+          <p class="review">{{movie.review}}</p>
+        <p class="overview">
+          {{movie.description}}
+        </p>
+
+          <!-- 查找名为 rate_movie 的视图函数，并使用该函数定义的路由规则来生成 URL -->
+
+          <!--  id = movie.id 是一个关键字参数，它将被添加到生成的 URL 中。
+                在这个例子中，movie.id 的值将作为 id 参数附加到 URL 上。
+                这对于创建指向特定资源（如具有特定 ID 的书籍）的链接非常有用。-->
+
+        <a href="{{url_for('rate_movie', id = movie.id)}}" class="button">Update</a>
+
+          <!-- 查找名为 delete_movie 的视图函数，并使用该函数定义的路由规则来生成 URL -->
+
+          <!--  id = movie.id 是一个关键字参数，它将被添加到生成的 URL 中。
+                在这个例子中，movie.id 的值将作为 id 参数附加到 URL 上。
+                这对于创建指向特定资源（如具有特定 ID 的书籍）的链接非常有用。-->
+
+        <a href="{{ url_for('delete_movie', id=movie.id) }}" class="button delete-button">Delete</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+<div class="container text-center add">
+  <a href="{{ url_for('add_movie') }}" class="button">Add Movie</a>
+</div>
+
+{% endblock %}
